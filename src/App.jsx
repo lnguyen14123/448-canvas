@@ -9,6 +9,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Dashboard />} />
+        <Route path="/Dashboard" element={<Dashboard />} />
         <Route path="/course/:courseId" element={<Course />} />
         {/* <Route path="/course/:courseId/assignment/:assignmentId" element={<Assignment />} /> */}
       </Routes>
