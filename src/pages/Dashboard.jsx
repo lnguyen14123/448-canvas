@@ -9,7 +9,7 @@ const courses = [
   { id: 2, name: "Math201", color: "bg-green-500" },
   { id: 3, name: "ENG102", color: "bg-red-500" },
   { id: 4, name: "HIST210", color: "bg-yellow-500" },
-  { id: 5, name: "HIST210", color: "bg-orange-500" }
+  { id: 5, name: "CECS 448", color: "bg-orange-500" }
 ];
 
   const todos = [
@@ -36,7 +36,7 @@ const courses = [
             {courses.map((course) => (
                 <Link
                 key={course.id}
-                to={`/course/${course.id}`}
+                to={`/course/${course.name}`}
                 className="rounded 
                 hover:scale-[1.02] transition-transform duration-200 flex flex-col overflow-hidden
                 shadow-[0_4px_4px_rgba(0,0,0,.3)]"
