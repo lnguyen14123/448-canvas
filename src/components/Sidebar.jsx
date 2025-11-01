@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
   User,
   LayoutDashboard,
@@ -7,81 +7,64 @@ import {
   Users,
   Calendar,
   Mail,
-  Clock,
-  PlayCircle,
   BookMarked,
   HelpCircle,
-  GraduationCap,
-} from "lucide-react"; // run: npm install lucide-react
+} from "lucide-react";
 
-import logo from "../assets/logo.png"
+import logo from "../assets/logo.png";
 
 export default function Sidebar() {
+  const location = useLocation(); // gets current URL path
+
+  const navItems = [
+    { to: "/account", label: "Account", icon: <User className="w-8 h-8 mb-1" /> },
+    { to: "/", label: "Dashboard", icon: <LayoutDashboard className="w-8 h-8 mb-1" /> },
+    { to: "/courses", label: "Courses", icon: <BookOpen className="w-8 h-8 mb-1" /> },
+    { to: "/groups", label: "Groups", icon: <Users className="w-8 h-8 mb-1" /> },
+    { to: "/calendar", label: "Calendar", icon: <Calendar className="w-8 h-8 mb-1" /> },
+    { to: "/inbox", label: "Inbox", icon: <Mail className="w-7 h-7 mb-1" /> },
+    { to: "/textbooks", label: "Textbooks", icon: <BookMarked className="w-7 h-7 mb-1" /> },
+    { to: "/help", label: "Help", icon: <HelpCircle className="w-7 h-7 mb-1" /> },
+  ];
+
   return (
     <aside className="w-[10vw] bg-black text-white flex flex-col items-center space-y-6 shadow-lg">
-      {/* App Icon / Logo */}
       {/* Logo */}
-<div className="mb-2">
-  <Link to="/" className="flex items-center justify-center">
-    <img
-      src={logo}
-      alt="Logo"
-      className="w-[6vw] object-contain rounded hover:opacity-80 transition-opacity duration-200"
-    />
-  </Link>
-</div>
+      <div className="mb-2">
+        <Link to="/" className="flex items-center justify-center">
+          <img
+            src={logo}
+            alt="Logo"
+            className="w-[6vw] object-contain rounded hover:opacity-80 transition-opacity duration-200"
+          />
+        </Link>
+      </div>
 
       {/* Nav Links */}
-      <nav className="flex flex-col items-center space-y-6 text-md">
-        <Link to="/account" className="flex flex-col items-center hover:text-blue-400">
-          <User className="w-8 h-8 mb-1" />
-          <span className="">Account</span>
-        </Link>
+      <nav className="flex flex-col items-center space-y-6 text-md relative">
+        {navItems.map((item) => {
+          const isActive = location.pathname === item.to; // check if current page
 
-        <Link to="/" className="flex flex-col items-center hover:text-blue-400">
-          <LayoutDashboard className="w-8 h-8 mb-1" />
-          <span className="">Dashboard</span>
-        </Link>
+          return (
+            <div key={item.label} className="relative group">
+              <Link
+                to={item.to}
+                className={`
+                  flex flex-col items-center transition duration-200
+                  ${isActive ? "text-blue-400 font-bold" : "hover:text-blue-400"}
+                `}
+              >
+                {item.icon}
+                <span>{item.label}</span>
+              </Link>
 
-        <Link to="/courses" className="flex flex-col items-center hover:text-blue-400">
-          <BookOpen className="w-8 h-8 mb-1" />
-          <span className="">Courses</span>
-        </Link>
-
-        <Link to="/groups" className="flex flex-col items-center hover:text-blue-400">
-          <Users className="w-8 h-8 mb-1" />
-          <span className="">Groups</span>
-        </Link>
-
-        <Link to="/calendar" className="flex flex-col items-center hover:text-blue-400">
-          <Calendar className="w-8 h-8 mb-1" />
-          <span className="">Calendar</span>
-        </Link>
-
-        <Link to="/inbox" className="flex flex-col items-center hover:text-blue-400">
-          <Mail className="w-7 h-7 mb-1" />
-          <span className="">Inbox</span>
-        </Link>
-
-        {/* <Link to="/history" className="flex flex-col items-center hover:text-blue-400">
-          <Clock className="w-5 h-5 mb-1" />
-          <span className="text-xs">History</span>
-        </Link>
-
-        <Link to="/my-media" className="flex flex-col items-center hover:text-blue-400">
-          <PlayCircle className="w-5 h-5 mb-1" />
-          <span className="text-xs">My Media</span>
-        </Link> */}
-
-        <Link to="/textbooks" className="flex flex-col items-center hover:text-blue-400">
-          <BookMarked className="w-7 h-7 mb-1" />
-          <span className="">Textbooks</span>
-        </Link>
-
-        <Link to="/help" className="flex flex-col items-center hover:text-blue-400">
-          <HelpCircle className="w-7 h-7 mb-1" />
-          <span className="">Help</span>
-        </Link>
+              {/* Tooltip */}
+              <div className="absolute left-full top-1/2 -translate-y-1/2 ml-3 bg-gray-800 text-white text-sm rounded-lg py-1 px-3 opacity-0 group-hover:opacity-100 transform scale-90 group-hover:scale-100 transition-all duration-200 whitespace-nowrap z-10 shadow-lg">
+                {item.label}
+              </div>
+            </div>
+          );
+        })}
       </nav>
     </aside>
   );

@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 import Sidebar from "../components/Sidebar";
+import ChatButton from "../components/ChatButton";
 
 export default function Course() {
   const courseId = "CS101"; // for simplicity, or use useParams()
   
-  const sections = [
-    { name: "Home", color: "bg-blue-500" },
-    { name: "Grades", color: "bg-green-500" },
-    { name: "Modules", color: "bg-yellow-400" },
-    { name: "Assignments", color: "bg-red-400" },
-    { name: "People", color: "bg-purple-500" },
-  ];
+const sections = [
+  { name: "Home", color: "bg-blue-500", description: "Go back to the course homepage" },
+  { name: "Grades", color: "bg-green-500", description: "View your grades and feedback" },
+  { name: "Modules", color: "bg-yellow-400", description: "Access weekly course modules" },
+  { name: "Assignments", color: "bg-red-400", description: "See all assignments and due dates" },
+  { name: "People", color: "bg-purple-500", description: "View classmates and instructor info" },
+];
 
   const todos = [
     { id: 1, task: "Finish Homework 1", done: false },
@@ -23,17 +24,18 @@ export default function Course() {
     { id: 2, title: "Project 1", due: "Nov 10, 2025" },
   ];
 
-  const grades = [
-    { id: 1, assignment: "Homework 1", grade: "95%", points:"9.5"},
-    { id: 2, assignment: "Homework 2", grade: "95%", points:"9.5"},
-    { id: 3, assignment: "Homework 3", grade: "95%", points:"9.5"},
-    { id: 4, assignment: "Homework 4", grade: "95%", points:"9.5"},
-    { id: 5, assignment: "Homework 5", grade: "95%", points:"9.5"},
-    { id: 6, assignment: "Project 1", grade: "88%", points:"8.8"},
-    { id: 7, assignment: "Project 2", grade: "88%", points:"8.8"},
-    { id: 8, assignment: "Project 3", grade: "88%", points:"8.8"},
-    { id: 9, assignment: "Project 4", grade: "88%", points:"8.8"},
-  ];
+const grades = [
+  { id: 1, assignment: "Homework 1: Variables & Loops", grade: "95%", points: "9.5 / 10", dueDate: "2025-09-05" },
+  { id: 2, assignment: "Homework 2: Arrays & Strings", grade: "88%", points: "8.8 / 10", dueDate: "2025-09-12" },
+  { id: 3, assignment: "Homework 3: Functions", grade: "92%", points: "9.2 / 10", dueDate: "2025-09-19" },
+  { id: 4, assignment: "Project 1: Mini Calculator App", grade: "90%", points: "18 / 20", dueDate: "2025-09-26" },
+  { id: 5, assignment: "Homework 4: Recursion", grade: "96%", points: "9.6 / 10", dueDate: "2025-10-03" },
+  { id: 6, assignment: "Midterm Exam", grade: "84%", points: "42 / 50", dueDate: "2025-10-10" },
+  { id: 7, assignment: "Homework 5: Sorting Algorithms", grade: "98%", points: "9.8 / 10", dueDate: "2025-10-17" },
+  { id: 8, assignment: "Project 2: Data Visualizer", grade: "91%", points: "18.2 / 20", dueDate: "2025-10-24" },
+  { id: 9, assignment: "Homework 6: Hash Maps", grade: "89%", points: "8.9 / 10", dueDate: "2025-10-31" },
+  { id: 10, assignment: "Final Project: Full Web App", grade: "93%", points: "46.5 / 50", dueDate: "2025-12-05" },
+];
 
   const [currentSection, setCurrentSection] = useState("Home"); // start on Home
 
@@ -42,22 +44,45 @@ export default function Course() {
       <Sidebar />
 
   <main className="flex-1 p-8 overflow-y-auto h-screen">
-        {/* Top Navigation Section */}
-        <section className="bg-white p-6 rounded-lg shadow-xl border mb-8">
-          <nav className="flex justify-evenly">
-            {sections.map((section) => (
-              <button
-                key={section.name}
-                onClick={() => setCurrentSection(section.name)}
-                className={`${section.color} text-xl text-white px-4 py-2 rounded-lg font-bold hover:opacity-80 transition`}
-              >
-                {section.name}
-              </button>
-            ))}
-          </nav>
-        </section>
+{/* Top Navigation + Course Info */}
+<section className="bg-white p-6 rounded-lg shadow-xl border mb-8 sticky top-0 z-20">
+  <div className="flex items-center justify-between">
+    {/* Course Info */}
+    <div className="flex flex-col">
+      <h1 className="text-2xl font-bold text-gray-900">CS 101 - Introduction to Computer Science</h1>
+      <p className="text-gray-600 text-sm">Fall 2025 • Instructor: Dr. Smith</p>
+    </div>
 
-        {/* Course Header */}
+    {/* Section Navigation */}
+    <nav className="flex space-x-4">
+      {sections.map((section) => {
+        const isActive = currentSection === section.name;
+        return (
+          <div key={section.name} className="relative group">
+            <button
+              onClick={() => setCurrentSection(section.name)}
+              className={`
+                ${section.color} text-white px-4 py-2 rounded-lg font-bold transition
+                ${isActive
+                  ? "ring-4 ring-offset-2 ring-black shadow-xl scale-105 brightness-110"
+                  : "hover:opacity-80"}
+              `}
+            >
+              {section.name}
+            </button>
+
+            {/* Tooltip */}
+            <div className="absolute left-1/2 -translate-x-1/2 mt-2 w-max bg-gray-800 text-white text-sm rounded-lg py-1 px-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-10 shadow-lg">
+              {section.description}
+            </div>
+          </div>
+        );
+      })}
+    </nav>
+  </div>
+</section>
+
+        {/* Course Header
         <header className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-3xl font-semibold text-gray-900">
@@ -65,7 +90,7 @@ export default function Course() {
             </h1>
             <p className="text-gray-600 mt-1">Fall 2025 • Instructor: Dr. Smith</p>
           </div>
-        </header>
+        </header> */}
 
         {/* Main content */}
         <section>
@@ -156,22 +181,9 @@ export default function Course() {
             </div>
             <div className="text-right">
               <p className="font-semibold text-gray-800">
-                {g.points ?? 9} / {g.total ?? 10} pts
-              </p>
-              <p className="text-sm text-gray-600">
-                {Math.round(((g.points ?? 9) / (g.total ?? 10)) * 100)}%
+                {g.points}
               </p>
             </div>
-          </div>
-
-          {/* Progress Bar */}
-          <div className="w-full bg-gray-200 rounded-full h-2">
-            <div
-              className="bg-blue-500 h-2 rounded-full"
-              style={{
-                width: `${((g.points ?? 9) / (g.total ?? 10)) * 100}%`,
-              }}
-            ></div>
           </div>
         </li>
       ))}
@@ -240,6 +252,9 @@ export default function Course() {
           </ul>
         </div>
       </aside>
+
+      <ChatButton />
+
     </div>
   );
 }
