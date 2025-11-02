@@ -2,11 +2,14 @@ import React from "react";
 import {useState} from "react";
 import { Link } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
+import Switch from "../components/Switch Toggle";
+import "../components/Switch.css"
 import img from "../assets/lb_csulb.png"
 
 export default function Profile() {
 
   const [inputValue, setInputValue] = useState('');
+  const [toggleValue, setToggleValue] = useState(false);
 
   const handleChange = (event) => {
     setInputValue(event.target.value)
@@ -118,6 +121,30 @@ export default function Profile() {
             <br></br>
             <br></br>
         </section>
+        <section>
+          <h1 className="text-4xl">Notification Settings</h1>
+          <br></br>
+          <text>Announcements</text>
+          <Switch
+            isOn={toggleValue}
+            handleToggle={() => setToggleValue(!toggleValue)} />
+          <br></br>
+          <text>Grade notifications</text>
+          <Switch
+            isOn={toggleValue}
+            handleToggle={() => setToggleValue(!toggleValue)} />
+          <br></br>
+          <text>Invitation notifications</text>
+          <Switch
+            isOn={toggleValue}
+            handleToggle={() => setToggleValue(!toggleValue)} />
+          <br></br>
+          <text>Discussion notifications</text>
+          <Switch
+            isOn={toggleValue}
+            handleToggle={() => setToggleValue(!toggleValue)} />
+          <br></br>
+        </section>
         <button
           style={{
             backgroundColor: 'blue',
@@ -127,4 +154,5 @@ export default function Profile() {
       </main>
     </div>
   );
+
 }
