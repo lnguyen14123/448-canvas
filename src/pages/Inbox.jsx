@@ -1,9 +1,14 @@
-import React, { useMemo, useState, useEffect } from "react";
+﻿import React, { useMemo, useState, useEffect } from "react";
 import Sidebar from "../components/Sidebar";
-import { MailPlus, Send, Paperclip, Search, Settings, X } from "lucide-react";
+import { MailPlus, Send, Paperclip, Search, Settings, X, Eye, EyeOff, ArrowLeft } from "lucide-react";
 
 export default function Inbox() {
     const [settingsOpen, setSettingsOpen] = useState(false);
+	const [showInbox, setShowInbox] = useState(true);
+	const [showCourses, setShowCourses] = useState(true);
+	const [selectedThread, setSelectedThread] = useState(null);
+
+
 
     // Local data: courses + people
     const COURSES = [
@@ -11,6 +16,7 @@ export default function Inbox() {
             id: "c448",
             name: "CECS 448",
             people: [
+				{ id: "u0", name: "— Course",email:"Send to entire class",role:""},
                 { id: "u1", name: "Olivia Brown", email: "olivia.brown@example.edu", role: "Student" },
                 { id: "u2", name: "Prof. Parker", email: "prof.parker@example.edu", role: "Instructor" },
                 { id: "u3", name: "TA Miller", email: "ta.miller@example.edu", role: "TA" },
@@ -22,6 +28,7 @@ export default function Inbox() {
             id: "c101",
             name: "CS101",
             people: [
+				{ id: "u10", name: "— Course",email:"Send to entire class",role:""},
                 { id: "u11", name: "Liam Martinez", email: "liam.martinez@example.edu", role: "Student" },
                 { id: "u12", name: "Emma Lewis", email: "emma.lewis@example.edu", role: "Student" },
                 { id: "u13", name: "Prof. Johnson", email: "prof.johnson@example.edu", role: "Instructor" },
@@ -31,6 +38,7 @@ export default function Inbox() {
             id: "c201",
             name: "Math201",
             people: [
+				{ id: "u20", name: "— Course",email:"Send to entire class",role:""},
                 { id: "u21", name: "Noah Anderson", email: "noah.anderson@example.edu", role: "Student" },
                 { id: "u22", name: "Ava Thompson", email: "ava.thompson@example.edu", role: "Student" },
                 { id: "u23", name: "Prof. Carter", email: "prof.carter@example.edu", role: "Instructor" },
@@ -40,6 +48,7 @@ export default function Inbox() {
             id: "c102",
             name: "ENG102",
             people: [
+				{ id: "u30", name: "— Course",email:"Send to entire class",role:""},
                 { id: "u31", name: "Mia Harris", email: "mia.harris@example.edu", role: "Student" },
                 { id: "u32", name: "Lucas Clark", email: "lucas.clark@example.edu", role: "Student" },
                 { id: "u33", name: "Prof. Collins", email: "prof.collins@example.edu", role: "Instructor" },
@@ -49,6 +58,7 @@ export default function Inbox() {
             id: "c210",
             name: "HIST210",
             people: [
+				{ id: "u40", name: "— Course",email:"Send to entire class",role:""},
                 { id: "u41", name: "James Walker", email: "james.walker@example.edu", role: "Student" },
                 { id: "u42", name: "Grace Turner", email: "grace.turner@example.edu", role: "Student" },
                 { id: "u43", name: "Prof. Brooks", email: "prof.brooks@example.edu", role: "Instructor" },
@@ -57,11 +67,47 @@ export default function Inbox() {
     ];
 
     const THREADS = [
-        { id: "t1", title: "Welcome to CECS 448", last: "Syllabus attached.", ts: "2025-09-01 10:03", unread: false },
-        { id: "t2", title: "Project 1", last: "Project1 posted.", ts: "2025-10-02 14:21", unread: true },
-    ];
+		{
+			id: "t1",
+			title: "Welcome to CECS 448",
+			last: "Syllabus attached.",
+			ts: "2025-09-01 10:03",
+			unread: false,
+			messages: [
+				{
+					from: "Instructor <prof.jones@example.edu>",
+					to: "You",
+					body: "Welcome to CECS 448! Please review the attached syllabus before next class.",
+				},
+			],
+		},
+		{
+			id: "t2",
+			title: "Project 1",
+			last: "Project1 posted.",
+			ts: "2025-10-02 14:21",
+			unread: true,
+			messages: [
+				{
+					from: "TA <ta.lee@example.edu>",
+					to: "You",
+					body: "Hi everyone, Project 1 has been posted on BeachBoard. Let us know if you have questions.",
+				},
+			],
+		},
+	];
 
     const [selectedCourseId, setSelectedCourseId] = useState(COURSES[0].id);
+
+	const handleThreadClick = (thread) => {
+		setSelectedThread(thread);
+		setShowInbox(false);
+	};
+
+	const handleBackToInbox = () => {
+		setSelectedThread(null);
+		setShowInbox(true);
+	};
 
     return (
         <div className="min-h-screen flex bg-white text-gray-900">
@@ -69,12 +115,14 @@ export default function Inbox() {
 
             <div className="flex-1 grid grid-cols-12">
                 {/* Left: mailbox */}
+				{showInbox && !selectedThread && (
                 <div className="col-span-4 border-r bg-gray-50/60 min-h-screen flex flex-col">
                     <div className="flex items-center justify-between p-4 border-b bg-white sticky top-0 z-10">
                         <div className="flex items-center gap-2">
                             <MailPlus className="w-5 h-5" />
                             <h1 className="font-semibold">Inbox</h1>
                         </div>
+
                         <button
                             className="p-2 rounded-lg hover:bg-gray-100"
                             onClick={() => setSettingsOpen(true)}
@@ -83,17 +131,41 @@ export default function Inbox() {
                             <Settings className="w-5 h-5" />
                         </button>
                     </div>
-                    <Mailbox threads={THREADS} />
+                    <Mailbox threads={THREADS} onSelectThread={handleThreadClick} />
                 </div>
+				)}
+				<div className={`min-h-screen flex flex-col ${showInbox ? "col-span-8" : "col-span-12"}`}>
+					<div className="flex items-center justify-between p-4 border-b bg-white">
+						<h1 className="font-semibold text-lg">{selectedThread ? "Message Thread" : "Compose Message"}</h1>
+
+						{/* Toggle buttons */}
+						<div className="flex items-center gap-2">
+							<button
+								className="p-2 rounded-lg hover:bg-gray-100 flex items-center gap-1 text-sm"
+								onClick={() => setShowInbox((v) => !v)}
+							>
+								{showInbox ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+								<span>{showInbox ? "Hide Inbox" : "Show Inbox"}</span>
+							</button>
+						</div>
+				</div>
+				{selectedThread ? (
+					<ThreadDetail thread={selectedThread} onBack={handleBackToInbox} />
+				) : (
+					<>
+
 
                 {/* Right: course buttons + composer */}
-                <div className="col-span-8 min-h-screen flex flex-col">
+				{showCourses && (
                     <CourseHeader
                         courses={COURSES}
                         selectedCourseId={selectedCourseId}
                         onChange={setSelectedCourseId}
                     />
+				)}
                     <Composer courses={COURSES} selectedCourseId={selectedCourseId} />
+					</>
+					)}
                 </div>
             </div>
 
@@ -102,7 +174,7 @@ export default function Inbox() {
     );
 }
 
-function Mailbox({ threads }) {
+function Mailbox({ threads, onSelectThread }) {
     const [q, setQ] = useState("");
     const items = useMemo(() => {
         if (!q) return threads;
@@ -126,9 +198,10 @@ function Mailbox({ threads }) {
             <div className="overflow-auto">
                 {items.map((t) => (
                     <div key={t.id} className="px-3">
-                        <div
+                        <div 
                             className={`border rounded-lg p-3 mb-2 bg-white hover:bg-gray-50 transition ${t.unread ? "border-amber-200" : "border-gray-200"
                                 }`}
+								onClick={() => onSelectThread(t)}
                         >
                             <div className="flex items-center justify-between">
                                 <div className="font-medium truncate mr-2">{t.title}</div>
@@ -179,6 +252,34 @@ function CourseHeader({ courses, selectedCourseId, onChange }) {
             </div>
         </div>
     );
+}
+
+function ThreadDetail({ thread, onBack }) {
+	return (
+		<div className="flex-1 p-6">
+			<button
+				onClick={onBack}
+				className="inline-flex items-center gap-2 text-sm text-gray-700 hover:text-black mb-4"
+			>
+				<ArrowLeft className="w-4 h-4" /> Back to Inbox
+			</button>
+
+			<div className="border rounded-2xl shadow-sm bg-white p-6">
+				<h2 className="text-xl font-semibold mb-2">{thread.title}</h2>
+				<div className="text-sm text-gray-500 mb-4">{thread.ts}</div>
+
+				{thread.messages.map((msg, i) => (
+					<div key={i} className="mb-6">
+						<div className="text-sm font-medium text-gray-800">
+							From: {msg.from}
+						</div>
+						<div className="text-sm text-gray-700">To: {msg.to}</div>
+						<p className="mt-3 text-gray-900 whitespace-pre-line">{msg.body}</p>
+					</div>
+				))}
+			</div>
+		</div>
+	);
 }
 
 function Composer({ courses, selectedCourseId }) {
