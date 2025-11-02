@@ -11,8 +11,6 @@ import {
   HelpCircle,
 } from "lucide-react";
 
-import logo from "../assets/logo.png";
-
 export default function Sidebar() {
   const location = useLocation(); // gets current URL path
 
@@ -33,7 +31,7 @@ export default function Sidebar() {
       <div className="mb-2">
         <Link to="/" className="flex items-center justify-center">
           <img
-            src={logo}
+            src="/logo.png"
             alt="Logo"
             className="w-[6vw] object-contain rounded hover:opacity-80 transition-opacity duration-200"
           />

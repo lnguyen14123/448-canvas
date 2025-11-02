@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
-import img from "../assets/lb_csulb.png";
+// import img from "../assets/lb_csulb.png";
 
 export default function Dashboard() {
   const courses = [
@@ -62,7 +62,7 @@ export default function Dashboard() {
       {/* Right Sidebar - To-Do List */}
       <aside className="w-[25vw] bg-white p-6 flex-shrink-0">
         <img
-          src={img}
+          src="/lb_csulb.png"
           alt=""
           className="h-[6vh] mb-2"
         />
