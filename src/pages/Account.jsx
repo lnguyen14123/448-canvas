@@ -8,7 +8,10 @@ import "../components/Switch.css"
 export default function Profile() {
 
   const [inputValue, setInputValue] = useState('');
-  const [toggleValue, setToggleValue] = useState(false);
+  const [toggleValue1, setToggleValue1] = useState(false);
+  const [toggleValue2, setToggleValue2] = useState(false);
+  const [toggleValue3, setToggleValue3] = useState(false);
+  const [toggleValue4, setToggleValue4] = useState(false);
 
   const handleChange = (event) => {
     setInputValue(event.target.value)
@@ -125,23 +128,27 @@ export default function Profile() {
           <br></br>
           <text>Announcements</text>
           <Switch
-            isOn={toggleValue}
-            handleToggle={() => setToggleValue(!toggleValue)} />
+            id="1"
+            checked={toggleValue1}
+            onChange={() => setToggleValue1(!toggleValue1)} />
           <br></br>
           <text>Grade notifications</text>
           <Switch
-            isOn={toggleValue}
-            handleToggle={() => setToggleValue(!toggleValue)} />
+            id="2"
+            checked={toggleValue2}
+            onChange={() => setToggleValue2(!toggleValue2)} />
           <br></br>
           <text>Invitation notifications</text>
           <Switch
-            isOn={toggleValue}
-            handleToggle={() => setToggleValue(!toggleValue)} />
+            id="3"
+            checked={toggleValue3}
+            onChange={() => setToggleValue3(!toggleValue3)} />
           <br></br>
           <text>Discussion notifications</text>
           <Switch
-            isOn={toggleValue}
-            handleToggle={() => setToggleValue(!toggleValue)} />
+            id="4"
+            checked={toggleValue4}
+            onChange={() => setToggleValue4(!toggleValue4)} />
           <br></br>
         </section>
         <button
@@ -153,5 +160,4 @@ export default function Profile() {
       </main>
     </div>
   );
-
 }
