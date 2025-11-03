@@ -45,7 +45,7 @@ export default function Dashboard() {
               {/* Bottom white section with text */}
               <div className="bg-white p-4 h-[15vh] flex flex-col justify-between items-start text-gray-800">
                 {/* Subject at the top */}
-                <p className="text-lg text-black">
+                <p className="text-lg text-black font-semibold">
                   {course.subject}
                 </p>
 
