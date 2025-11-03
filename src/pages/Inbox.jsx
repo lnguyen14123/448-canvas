@@ -16,7 +16,7 @@ export default function Inbox() {
             id: "c448",
             name: "CECS 448",
             people: [
-				{ id: "u0", name: "— Course",email:"Send to entire class",role:""},
+				{ id: "u0", name: "— CECS 448",email:"Send to entire class",role:""},
                 { id: "u1", name: "Olivia Brown", email: "olivia.brown@example.edu", role: "Student" },
                 { id: "u2", name: "Prof. Parker", email: "prof.parker@example.edu", role: "Instructor" },
                 { id: "u3", name: "TA Miller", email: "ta.miller@example.edu", role: "TA" },
@@ -28,7 +28,7 @@ export default function Inbox() {
             id: "c101",
             name: "CS101",
             people: [
-				{ id: "u10", name: "— Course",email:"Send to entire class",role:""},
+				{ id: "u10", name: "— CS101",email:"Send to entire class",role:""},
                 { id: "u11", name: "Liam Martinez", email: "liam.martinez@example.edu", role: "Student" },
                 { id: "u12", name: "Emma Lewis", email: "emma.lewis@example.edu", role: "Student" },
                 { id: "u13", name: "Prof. Johnson", email: "prof.johnson@example.edu", role: "Instructor" },
@@ -38,7 +38,7 @@ export default function Inbox() {
             id: "c201",
             name: "Math201",
             people: [
-				{ id: "u20", name: "— Course",email:"Send to entire class",role:""},
+				{ id: "u20", name: "— Math201",email:"Send to entire class",role:""},
                 { id: "u21", name: "Noah Anderson", email: "noah.anderson@example.edu", role: "Student" },
                 { id: "u22", name: "Ava Thompson", email: "ava.thompson@example.edu", role: "Student" },
                 { id: "u23", name: "Prof. Carter", email: "prof.carter@example.edu", role: "Instructor" },
@@ -48,7 +48,7 @@ export default function Inbox() {
             id: "c102",
             name: "ENG102",
             people: [
-				{ id: "u30", name: "— Course",email:"Send to entire class",role:""},
+				{ id: "u30", name: "— ENG102",email:"Send to entire class",role:""},
                 { id: "u31", name: "Mia Harris", email: "mia.harris@example.edu", role: "Student" },
                 { id: "u32", name: "Lucas Clark", email: "lucas.clark@example.edu", role: "Student" },
                 { id: "u33", name: "Prof. Collins", email: "prof.collins@example.edu", role: "Instructor" },
@@ -58,12 +58,13 @@ export default function Inbox() {
             id: "c210",
             name: "HIST210",
             people: [
-				{ id: "u40", name: "— Course",email:"Send to entire class",role:""},
+				{ id: "u40", name: "— HIST210",email:"Send to entire class",role:""},
                 { id: "u41", name: "James Walker", email: "james.walker@example.edu", role: "Student" },
                 { id: "u42", name: "Grace Turner", email: "grace.turner@example.edu", role: "Student" },
                 { id: "u43", name: "Prof. Brooks", email: "prof.brooks@example.edu", role: "Instructor" },
             ],
         },
+        
     ];
 
     const THREADS = [
@@ -95,6 +96,48 @@ export default function Inbox() {
 				},
 			],
 		},
+        {
+		id: "t3",
+		title: "Midterm Review Session",
+		last: "Zoom link and review topics.",
+		ts: "2025-10-15 09:42",
+		unread: true,
+		messages: [
+			{
+				from: "Prof. Jones <prof.jones@example.edu>",
+				to: "Class List",
+				body: "Our midterm review will be held on Friday at 3PM. Here’s the Zoom link:\n\nhttps://zoom.example.com/review\n\nWe’ll cover:\n- Sorting algorithms\n- Memory management\n- Project 1 questions",
+			},
+        ]
+    },
+    {
+		id: "t4",
+		title: "Group Project Team Assignment",
+		last: "Team rosters now available.",
+		ts: "2025-10-20 16:12",
+		unread: false,
+		messages: [
+			{
+				from: "TA Lee <ta.lee@example.edu>",
+				to: "You",
+				body: "Group assignments for Project 2 are now posted on BeachBoard.\n\nYour team:\n- You\n- Olivia Brown\n- Kevin Tran\n\nMake sure to schedule your first team meeting this week!",
+			},
+        ]
+    },
+    {
+		id: "t5",
+		title: "Lab Access Request",
+		last: "Lab hours extended until finals week.",
+		ts: "2025-11-02 12:15",
+		unread: false,
+		messages: [
+			{
+				from: "Lab Admin <labadmin@example.edu>",
+				to: "Students",
+				body: "We’ve extended CECS Lab hours until finals week:\n\nMon–Fri: 8 AM – 10 PM\nSat–Sun: 10 AM – 6 PM\n\nGood luck with your projects!",
+			},
+		],
+	},
 	];
 
     const [selectedCourseId, setSelectedCourseId] = useState(COURSES[0].id);
