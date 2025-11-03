@@ -4,6 +4,7 @@ import Dashboard from "./pages/Dashboard";
 import Course from "./pages/Course";
 import Inbox from "./pages/Inbox";
 import Account from "./pages/Account";
+import Account from "./pages/Account";
 // import Assignment from "./pages/Assignment";
 
 function App() {

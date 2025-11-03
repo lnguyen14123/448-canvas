@@ -60,7 +60,6 @@ export default function Sidebar() {
           {navItems.map((item) => {
             const isActive = location.pathname === item.to;
             
-            // Special handling for Courses item
             if (item.label === "Courses") {
               return (
                 <div key={item.label} className="relative group w-full">
@@ -88,7 +87,6 @@ export default function Sidebar() {
               );
             }
 
-            // Regular nav items
             return (
               <div key={item.label} className="relative group">
                 <Link
